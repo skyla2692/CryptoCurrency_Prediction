@@ -12,7 +12,7 @@ high_prices = data['high_price'].values
 low_prices = data['low_price'].values
 mid_prices = data['mid_price'].values
 
-seq_len = 50
+seq_len = 45    # window size 지정
 sequence_length = seq_len + 1
 
 result = []
@@ -45,9 +45,9 @@ print(x_train.shape, x_test.shape)
 
 model = Sequential()
 
-model.add(LSTM(50, return_sequences=True, input_shape=(50, 1)))
+model.add(LSTM(256, return_sequences=True, input_shape=(45, 1)))
 
-model.add(LSTM(64, return_sequences=False))
+model.add(LSTM(128, return_sequences=False))
 
 model.add(Dense(1, activation='linear'))
 
@@ -59,8 +59,8 @@ start_time = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
 
 model.fit(x_train, y_train,
     validation_data=(x_test, y_test),
-    batch_size=10,
-    epochs=20,
+    batch_size=16,
+    epochs=100,
     callbacks=[
         TensorBoard(log_dir='logs/%s' % (start_time)),
         ModelCheckpoint('./models/%s_eth.h5' % (start_time), monitor='val_loss', verbose=1, save_best_only=True, mode='auto'),
