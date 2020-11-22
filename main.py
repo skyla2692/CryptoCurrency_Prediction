@@ -17,11 +17,11 @@ authorization_token = 'Bearer {}'.format(jwt_token)
 # 값을 가져올 URL 링크
 url = "https://api.upbit.com/v1/candles/days"
 
-num = 6    # 가져올 날짜의 수 (최대 200)
+num = 4    # 가져올 날짜의 수 (최대 200)
 
 querystring = {"count" : num,  # 지정한 개수의 데이터
                "market" : "KRW-ETH",   # 이더리움 한화 가격
-               "to" : "2020-11-09 00:00:00"}    # 언제까지의 데이터를 가져오겠다
+               "to" : "2020-11-13 00:00:00"}    # 언제까지의 데이터를 가져오겠다
 
 response = requests.request("GET", url, params=querystring)
 
