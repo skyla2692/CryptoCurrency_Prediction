@@ -8,18 +8,19 @@ from keras.models import Sequential
 from keras.layers import LSTM, Dropout, Dense, Activation
 from keras.callbacks import TensorBoard, ModelCheckpoint, ReduceLROnPlateau
 
-data = pd.read_csv('num_data.csv')
+data = pd.read_csv('final_data.csv')
 
 high_prices = data['high_price'].values
 low_prices = data['low_price'].values
 mid_prices = data['mid_price'].values
+pred_prices = data['prediction_price'].values
 
 seq_len = 70  # window size 지정
 sequence_length = seq_len + 1
 
 result = []
-for index in range(len(mid_prices) - sequence_length):
-    result.append(mid_prices[index: index + sequence_length])
+for index in range(len(pred_prices) - sequence_length):
+    result.append(pred_prices[index: index + sequence_length])
 
 
 def normalize_windows(data):
