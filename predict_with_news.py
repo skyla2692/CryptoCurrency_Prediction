@@ -9,7 +9,7 @@ from keras.layers import LSTM, Dropout, Dense, Activation
 from keras.callbacks import TensorBoard, ModelCheckpoint, ReduceLROnPlateau
 from numpy import savetxt
 
-df = pd.read_csv('final_data.csv')
+df = pd.read_csv('chart_with_news.csv')
 
 mid_prices = df['mid_price'].values
 label = df['label'].values
@@ -68,7 +68,6 @@ print(x_train.shape, x_test.shape)
 # split train and test data of chart data
 c_row = int(len(chart_result) * 0.67)
 c_train = chart_result[:c_row, :]
-np.random.shuffle(c_train)
 
 cx_train = c_train[:, :-1]
 cx_train = np.reshape(cx_train, (cx_train.shape[0], cx_train.shape[1], 1))
@@ -79,6 +78,9 @@ cx_test = np.reshape(cx_test, (cx_test.shape[0], cx_test.shape[1], 1))
 cy_test = chart_result[c_row:, -1]
 
 print(cx_train.shape, cx_test.shape)
+
+checkpoint_path = "training1.h5"
+checkpoint_dir = os.path.dirname(checkpoint_path)
 
 #------------------------------------#
 
@@ -94,9 +96,10 @@ model.summary()
 model.fit(x_train, y_train,
           validation_data=(x_test, y_test),
           batch_size=30,
-          epochs=100,
+          epochs=300,
           callbacks=[
-              ModelCheckpoint(monitor='val_loss',
+              ModelCheckpoint(filepath=checkpoint_path,
+                              monitor='val_loss',
                               verbose=1,
                               save_weights_only=True,
                               mode='auto'),
@@ -125,9 +128,10 @@ model.summary()
 model.fit(cx_train, cy_train,
           validation_data=(cx_test, cy_test),
           batch_size=30,
-          epochs=100,
+          epochs=300,
           callbacks=[
-              ModelCheckpoint(monitor='val_loss',
+              ModelCheckpoint(filepath=checkpoint_path,
+                              monitor='val_loss',
                               verbose=1,
                               save_weights_only=True,
                               mode='auto'),
@@ -148,3 +152,4 @@ ax.plot(c_pred, label='Predicted with chart data')
 ax.plot(pred, label='Predicted with chart data and text data')
 ax.legend()
 plt.show()
+fig.savefig('Chart.png')
