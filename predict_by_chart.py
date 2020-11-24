@@ -80,9 +80,6 @@ cy_test = chart_result[c_row:, -1]
 
 print(cx_train.shape, cx_test.shape)
 
-checkpoint_path = "training1.h5"
-checkpoint_dir = os.path.dirname(checkpoint_path)
-
 #------------------------------------#
 
 model = Sequential()
@@ -99,8 +96,7 @@ model.fit(x_train, y_train,
           batch_size=30,
           epochs=100,
           callbacks=[
-              ModelCheckpoint(filepath=checkpoint_path,
-                              monitor='val_loss',
+              ModelCheckpoint(monitor='val_loss',
                               verbose=1,
                               save_weights_only=True,
                               mode='auto'),
@@ -131,8 +127,7 @@ model.fit(cx_train, cy_train,
           batch_size=30,
           epochs=100,
           callbacks=[
-              ModelCheckpoint(filepath=checkpoint_path,
-                              monitor='val_loss',
+              ModelCheckpoint(monitor='val_loss',
                               verbose=1,
                               save_weights_only=True,
                               mode='auto'),
@@ -149,7 +144,7 @@ c_pred = model.predict(cx_test)
 fig = plt.figure(facecolor='white', figsize=(20, 10))
 ax = fig.add_subplot(111)
 ax.plot(y_test, label='Real Value')
-ax.plot(pred, label='Predicted with chart data')
-ax.plot(c_pred, label='Predicted with chart data and text data')
+ax.plot(c_pred, label='Predicted with chart data')
+ax.plot(pred, label='Predicted with chart data and text data')
 ax.legend()
 plt.show()
