@@ -1,3 +1,4 @@
+import board as board
 import keras
 import pandas as pd
 import numpy as np
@@ -39,9 +40,11 @@ label_result = normalize_windows(label_result)
 chart_result = mid_price_result
 
 added_result = np.c_[mid_price_result, label_result]
+print(added_result.shape)
 
-#print(added_result.shape)
-#savetxt('result_data.csv', result, delimiter=',')
+# savetxt('result.csv', added_result, delimiter=',')
+
+print(added_result.shape)
 
 added_result = pd.read_csv('result_data.csv')
 added_result = added_result.values
