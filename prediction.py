@@ -9,7 +9,7 @@ from keras.layers import LSTM, Dropout, Dense, Activation
 from keras.callbacks import TensorBoard, ModelCheckpoint, ReduceLROnPlateau
 from numpy import savetxt
 
-df = pd.read_csv('final_data.csv')
+df = pd.read_csv('chart_with_news.csv')
 
 mid_prices = df['mid_price'].values
 label = df['label'].values
@@ -35,16 +35,9 @@ def normalize_windows(data):
 
 mid_price_result = normalize_windows(mid_price_result)
 label_result = normalize_windows(label_result)
-
 chart_result = mid_price_result
+added_result = mid_price_result
 
-added_result = np.c_[mid_price_result, label_result]
-
-#print(added_result.shape)
-#savetxt('result_data.csv', result, delimiter=',')
-
-added_result = pd.read_csv('result_data.csv')
-added_result = added_result.values
 
 #------------------------------------#
 
@@ -96,7 +89,7 @@ model.summary()
 model.fit(x_train, y_train,
           validation_data=(x_test, y_test),
           batch_size=30,
-          epochs=300,
+          epochs=100,
           callbacks=[
               ModelCheckpoint(filepath=checkpoint_path,
                               monitor='val_loss',
@@ -128,7 +121,7 @@ model.summary()
 model.fit(cx_train, cy_train,
           validation_data=(cx_test, cy_test),
           batch_size=30,
-          epochs=300,
+          epochs=100,
           callbacks=[
               ModelCheckpoint(filepath=checkpoint_path,
                               monitor='val_loss',
@@ -152,4 +145,4 @@ ax.plot(c_pred, label='Predicted with chart data')
 ax.plot(pred, label='Predicted with chart data and text data')
 ax.legend()
 plt.show()
-fig.savefig('chart_twit.png')
+fig.savefig('Chart.png')
