@@ -4,7 +4,7 @@ Predicting the price of Etherium. <br>
 
 Used LSTM for prediction model. <br>
 
-You can  find a new about the project [HERE]("http://www.epnc.co.kr/news/articleView.html?idxno=112285").
+You can  find a new about the project [HERE](http://www.epnc.co.kr/news/articleView.html?idxno=112285).
 
 ### Result image
 <img width="910" alt="LSTM 예측 모델 결과 그래프" src="https://user-images.githubusercontent.com/42270720/101906074-bc7beb80-3bfb-11eb-989d-d8f1a4f1de7a.png">
